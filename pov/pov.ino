@@ -11,6 +11,8 @@ const int save_pin = 4; //SHCP (pino 11 no 595)  - ligado diretamente
 //o pino 10 (MR - Nreset) foi ligado ao VCC com um resistor de 1k
 const int buzzer = 11; //buzzer ligado a um resistor de 300R
 
+const int intervalo = 10;
+
 String linha0 = "00001111000111000000100000000";
 String linha1 = "00001000100100100001010000000";
 String linha2 = "00001000100100100010001000000";
@@ -19,10 +21,6 @@ String linha4 = "00001000100100100011111000000";
 String linha5 = "00001000010100-10010001000000";
 String linha6 = "00001000010100010010001000000";
 String linha7 = "00001111100100011010001000000";
-
-String linhaTeste1 = "11100011";
-String linhaTeste2 = "00011100";
-String linhaTeste3 = "10100011";
 
 void setup() {
   pinMode(data_pin,OUTPUT);
@@ -35,14 +33,54 @@ void setup() {
   
 }
 
-void enviaLinha(String linha) {
-  for (int pos = 0; pos < linha.length(); pos++) {
-    int valor = linha.charAt(pos) - '0';
+void enviaColuna(String coluna) {
+  for (int pos = 0; pos < coluna.length(); pos++) {
+    int valor = coluna.charAt(pos) - '0';
     save(valor);
   }
 }
 
 void loop() {
+  tone(buzzer,600);
+  delay(100);
+  noTone(buzzer);
+  
+  for (int pos = 0; pos < linha1.length(); pos++) {
+    String coluna = "" + String(linha0.charAt(pos));
+    coluna += String(linha1.charAt(pos));
+    coluna += String(linha2.charAt(pos));
+    coluna += String(linha3.charAt(pos));
+    coluna += String(linha4.charAt(pos));
+    coluna += String(linha5.charAt(pos));
+    coluna += String(linha6.charAt(pos));
+    coluna += String(linha7.charAt(pos));
+    enviaColuna(coluna);
+    latch();
+//    Serial.println(coluna);
+    delay(intervalo);
+  }
+  
+  tone(buzzer,250);
+  delay(100);
+  noTone(buzzer);
+  
+  for (int pos = linha1.length(); pos > 0;  pos--) {
+    String coluna = "" + String(linha0.charAt(pos));
+    coluna += String(linha1.charAt(pos));
+    coluna += String(linha2.charAt(pos));
+    coluna += String(linha3.charAt(pos));
+    coluna += String(linha4.charAt(pos));
+    coluna += String(linha5.charAt(pos));
+    coluna += String(linha6.charAt(pos));
+    coluna += String(linha7.charAt(pos));
+    enviaColuna(coluna);
+    latch();
+//    Serial.println(coluna);
+    delay(intervalo);
+  }  
+  
+  
+  /*
   enviaLinha(linhaTeste1);
   latch();
   delay(1000);
@@ -51,30 +89,13 @@ void loop() {
   delay(1000);
   enviaLinha(linhaTeste3);
   latch();
-  delay(1000);  
+  delay(1000); 
+  */ 
 /*  
   delay(1000);
   Serial.println("De novo...");
   delay(1000);
 */  
-/*  
-  setData(HIGH);
-  save();
-  save();
-  save();
-  save();
-//  delay(10);
-  latch();
-  delay(1000);
-  setData(LOW);
-  save();
-  save();
-  save();
-  save();
-//  delay(10);
-  latch();
-  delay(1000);  
-*/
 } 
 
 //envia um valor no pino data
