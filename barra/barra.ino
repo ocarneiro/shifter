@@ -13,33 +13,36 @@ const int save_pin = 4; //SHCP (pino 11 no 595)  - ligado com um resistor de 300
 
 const int pot = A0; //Potenciometro conectado ao pino analogico A0
 
+//sequencia de valores a serem exibidos pela barra de leds, representados por 1 (aceso) e 0 (apagado)
+int valores[] = {B00000000, B00000001, B00000011, B00000111, B00001111, B00011111, B00111111, B01111111, B11111111};
+  
+
+
 void setup() {
   pinMode(data_pin,OUTPUT);
   pinMode(latch_pin,OUTPUT);
   pinMode(save_pin,OUTPUT);  
   latch();
   pinMode(pot, INPUT);
+  Serial.begin(9600);  //debug
 }
 
 void loop() {
-  // 
+  int leitura = analogRead(pot) ;
+  int saida = map(leitura, 0, 1023, 8, 0);
+  acendeBarra(valores[saida]);
+  Serial.println(String(leitura) + " -> " + String(saida)); //debug
+  delay(500);
 }
 
 
-//
-void testaBarra() {
-  //sequencia de valores a serem exibidos pela barra de leds, representados por 1 (aceso) e 0 (apagado)
-  int valores[] = {B00000000, B00000001, B00000011, B00000111, B00001111, B00011111, B00111111, B01111111, B11111111};
-  
-  for(int indice_valor = 0; indice_valor < 9; indice_valor++) {
-    int valor = valores[indice_valor]; //guarda um inteiro que representa ate 8 bits acesos ou apagados
+//acende leds a partir de um inteiro que representa ate 8 bits acesos ou apagados
+void acendeBarra(int valor) {
     for(int pos_atual = 7; pos_atual >= 0; pos_atual--) {
       setData(bit_aceso(valor, pos_atual));
       save();
     }
     latch();
-    delay(500);
-  }  
 } 
 
 //retorna verdadeiro se o bit na posicao "indice" for 1. 
