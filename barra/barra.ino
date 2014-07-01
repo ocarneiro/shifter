@@ -11,18 +11,25 @@ const int save_pin = 4; //SHCP (pino 11 no 595)  - ligado com um resistor de 300
 //o pino 13 (OE - pause) foi ligado ao GND diretamente
 //o pino 10 (MR - Nreset) foi ligado ao VCC com um resistor de 1k
 
-//sequencia de valores a serem exibidos pela barra de leds, representados por 1 (aceso) e 0 (apagado)
-int valores[] = {B00000000, B00000001, B00000011, B00000111, B00001111, B00011111, B00111111, B01111111, B11111111};
-
+const int pot = A0; //Potenciometro conectado ao pino analogico A0
 
 void setup() {
   pinMode(data_pin,OUTPUT);
   pinMode(latch_pin,OUTPUT);
   pinMode(save_pin,OUTPUT);  
   latch();
+  pinMode(pot, INPUT);
 }
 
 void loop() {
+  // 
+}
+
+
+//
+void testaBarra() {
+  //sequencia de valores a serem exibidos pela barra de leds, representados por 1 (aceso) e 0 (apagado)
+  int valores[] = {B00000000, B00000001, B00000011, B00000111, B00001111, B00011111, B00111111, B01111111, B11111111};
   
   for(int indice_valor = 0; indice_valor < 9; indice_valor++) {
     int valor = valores[indice_valor]; //guarda um inteiro que representa ate 8 bits acesos ou apagados
