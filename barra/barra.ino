@@ -14,7 +14,17 @@ const int save_pin = 4; //SHCP (pino 11 no 595)  - ligado com um resistor de 300
 const int pot = A0; //Potenciometro conectado ao pino analogico A0
 
 //sequencia de valores a serem exibidos pela barra de leds, representados por 1 (aceso) e 0 (apagado)
-int valores[] = {B00000000, B00000001, B00000011, B00000111, B00001111, B00011111, B00111111, B01111111, B11111111};
+int valores[] = {
+                   0,   //B00000000, 
+                   1,   //B00000001,  //2**0 = 1
+                   3,   //B00000011,  //2**1 = 2 + 1 = 3
+                   7,   //B00000111,   //2**2 = 4 + 3 = 7
+                   15,  //B00001111,  //2**3 = 8 + 7 = 15
+                   31,  //B00011111, 
+                   63,  //B00111111, 
+                   127, //B01111111, 
+                   255  //B11111111
+                 };
   
 
 
@@ -36,7 +46,7 @@ void loop() {
 }
 
 
-//acende leds a partir de um inteiro que representa ate 8 bits acesos ou apagados
+//acende leds a partir de um inteiro que representa bits acesos ou apagados
 void acendeBarra(int valor) {
     for(int pos_atual = 7; pos_atual >= 0; pos_atual--) {
       setData(bit_aceso(valor, pos_atual));
