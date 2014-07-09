@@ -11,6 +11,9 @@ const int save_pin = 4; //SHCP (pino 11 no 595)  - ligado com um resistor de 300
 //o pino 13 (OE - pause) foi ligado ao GND diretamente
 //o pino 10 (MR - Nreset) foi ligado ao VCC com um resistor de 1k
 
+const int led9 = 5;
+const int led10 = 6;
+
 const int pot = A0; //Potenciometro conectado ao pino analogico A0
 
 //sequencia de valores a serem exibidos pela barra de leds, representados por 1 (aceso) e 0 (apagado)
@@ -23,7 +26,9 @@ int valores[] = {
                    31,  //B00011111, 
                    63,  //B00111111, 
                    127, //B01111111, 
-                   255  //B11111111
+                   255, //B11111111
+                   511,
+                   1023
                  };
   
 
@@ -34,12 +39,14 @@ void setup() {
   pinMode(save_pin,OUTPUT);  
   latch();
   pinMode(pot, INPUT);
+  pinMode(led9, OUTPUT);
+  pinMode(led10, OUTPUT);
   Serial.begin(9600);  //debug
 }
 
 void loop() {
   int leitura = analogRead(pot) ;
-  int saida = map(leitura, 0, 1023, 8, 0);
+  int saida = map(leitura, 0, 1023, 10, 0);
   acendeBarra(valores[saida]);
   Serial.println(String(leitura) + " -> " + String(saida)); //debug
   delay(500);
@@ -48,11 +55,14 @@ void loop() {
 
 //acende leds a partir de um inteiro que representa bits acesos ou apagados
 void acendeBarra(int valor) {
+    //utiliza o shift register para os 8 primeiros bits
     for(int pos_atual = 7; pos_atual >= 0; pos_atual--) {
       setData(bit_aceso(valor, pos_atual));
       save();
     }
     latch();
+    digitalWrite(led9, bit_aceso(valor, 8));
+    digitalWrite(led10, bit_aceso(valor, 9));
 } 
 
 //retorna verdadeiro se o bit na posicao "indice" for 1. 
