@@ -1,5 +1,5 @@
-//Barra
-//Ilumina uma barra de LED's (B210SR) a partir de um valor de um potenciometro
+//Barra sem pot
+//Ilumina uma barra de LED's (B210SR) para testes, sem potenciometro para controle
 //Utiliza um shift register (74HC595 ou 595)
 //Licenca: Apache 2.0 (use como quiser)
 //http://www.apache.org/licenses/LICENSE-2.0.html
@@ -14,7 +14,7 @@ const int save_pin = 4; //SHCP (pino 11 no 595)  - ligado com um resistor de 300
 const int led9 = 5;
 const int led10 = 6;
 
-const int pot = A0; //Potenciometro conectado ao pino analogico A0
+//const int pot = A0; //Potenciometro conectado ao pino analogico A0
 
 //sequencia de valores a serem exibidos pela barra de leds, representados por 1 (aceso) e 0 (apagado)
 int valores[] = {
