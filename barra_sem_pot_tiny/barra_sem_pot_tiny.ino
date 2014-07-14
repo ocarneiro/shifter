@@ -5,14 +5,14 @@
 //http://www.apache.org/licenses/LICENSE-2.0.html
 //Copyright 2014 Otavio Carneiro (carneiro.blog.br)
 
-const int data_pin = 2; //DS (pino 14 no 595)    - ligado com um resistor de 300R
-const int latch_pin = 3; //STCP (pino 12 no 595) - ligado com um resistor de 300R
-const int save_pin = 4; //SHCP (pino 11 no 595)  - ligado com um resistor de 300R
+const int data_pin = 0; //DS (pino 14 no 595)    - ligado com um resistor de 300R
+const int latch_pin = 1; //STCP (pino 12 no 595) - ligado com um resistor de 300R
+const int save_pin = 2; //SHCP (pino 11 no 595)  - ligado com um resistor de 300R
 //o pino 13 (OE - pause) foi ligado ao GND diretamente
 //o pino 10 (MR - Nreset) foi ligado ao VCC com um resistor de 1k
 
-const int led9 = 5;
-const int led10 = 6;
+const int led9 = 3;
+const int led10 = 4;
 
 //sequencia de valores a serem exibidos pela barra de leds, representados por 1 (aceso) e 0 (apagado)
 int valores[] = {
