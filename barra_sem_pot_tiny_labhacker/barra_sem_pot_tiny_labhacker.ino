@@ -14,19 +14,19 @@ const int save_pin = 2; //SHCP (pino 11 no 595)  - ligado com um resistor de 300
 const int led9 = 3;
 const int led10 = 4;
 
-const boolean DEBUG = true;
-
 //sequencia de valores a serem exibidos pela barra de leds, representados por 1 (aceso) e 0 (apagado)
 int valores[] = {511,1023,768,768,768,768,768,768,0, //L
                  512,768,960,240,124,110,99,110,124,240,960,768,512,0, //A
                  1022,1022,546,546,546,546,806,886,1022,476,0,0,0, //B
-                 //1023,32,32,32,32,32,32,1023,0, //H
-                 //384,640,640,672,672,448,0, //a
-                 //448,544,544,544,544,544,0, //c
-                 //1023,128,320,544,0, //k
-                 //448,672,672,672,160,192,0, //e
-                 //d960,32,32,0,0,0,0,0 //r
+                 1023,32,32,32,32,32,32,1023,0, //H
+                 384,640,640,672,672,448,0, //a
+                 448,544,544,544,544,544,0, //c
+                 1023,128,320,544,0, //k
+                 448,672,672,672,160,192,0, //e
+                 960,32,32,0,0,0,0,0 //r
                  };
+//verifica quantos inteiros formam a mensagem
+int qtde_valores = sizeof(valores) / sizeof(int); 
 
 void setup() {
   pinMode(data_pin,OUTPUT);
@@ -38,17 +38,11 @@ void setup() {
 }
 
 void loop() {
-  int pausa = 500;
-  for(int saida = 0; saida <= 10; saida++) {
+  int pausa = 200;
+  for(int saida = 0; saida <= qtde_valores; saida++) {
     acendeBarra(valores[saida]);
     delay(pausa);
   }
-  
-  for(int saida = 10; saida >= 0; saida--) {
-    acendeBarra(valores[saida]);
-    delay(pausa);
-  }
-  
 }
 
 
