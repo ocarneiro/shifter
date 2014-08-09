@@ -38,10 +38,12 @@ void setup() {
 }
 
 void loop() {
-  int pausa = 200;
+  //int pausa = 2;  //200 eh lento demais... 50 tb... 20 idem... 2 tambem
+  int micro_pausa = 15; //300 eh muito
   for(int saida = 0; saida <= qtde_valores; saida++) {
     acendeBarra(valores[saida]);
-    delay(pausa);
+    //delay(pausa);
+    delayMicroseconds(micro_pausa);
   }
 }
 
